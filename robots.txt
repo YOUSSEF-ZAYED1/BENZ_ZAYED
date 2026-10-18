@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://youssef-zayed1.github.io/BENZ_ZAYED/sitemap.xml
