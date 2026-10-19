@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr" id="root">
 <head>
     <meta charset="UTF-8">
@@ -48,6 +48,12 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        html, body {
+            overflow-x: hidden;
+            width: 100%;
+            max-width: 100vw;
+        }
+
         body {
             background: var(--bg-dark);
             background-image:
@@ -92,7 +98,7 @@
         }
 
         .header-inner {
-            max-width: 1240px;
+            max-width: 1440px;
             margin: 0 auto;
             padding: 12px 20px;
             display: flex;
@@ -277,11 +283,12 @@
            ═════════════════════════════════════════════ */
         .portal-main {
             width: 100%;
-            max-width: 1240px;
+            max-width: 1440px;
+            margin: 0 auto;
             padding: 24px 16px 90px;
             display: flex;
             flex-direction: column;
-            align-items: center;
+            align-items: stretch;
         }
 
         .tab-section {
@@ -1717,31 +1724,495 @@
         /* ═════════════════════════════════════════════
            RESPONSIVE DESIGN (PC & MOBILE)
            ═════════════════════════════════════════════ */
-        @media (max-width: 900px) {
-            .nav-links, .working-time-badge { display: none !important; }
-            .mobile-bottom-nav { display: flex !important; }
-            .portal-main { padding-bottom: 90px; }
-            .portal-hero-title { font-size: 1.5rem; }
-            .products-grid, .services-grid, .downloads-grid {
-                grid-template-columns: 1fr;
-            }
-            .blog-features-grid { grid-template-columns: 1fr; }
-            .how-steps-grid { grid-template-columns: 1fr; }
-            .blog-cta-box { flex-direction: column !important; text-align: center; }
-            .blog-warning-list { grid-template-columns: 1fr; }
-            .blog-pro-tip { flex-direction: column !important; text-align: center; }
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+           MOBILE HAMBURGER & SIDE DRAWER (CARSOFTZ STYLE)
+           â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+        .mobile-menu-btn {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(0, 210, 255, 0.35);
+            color: #fff;
+            font-size: 1.15rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            flex-shrink: 0;
+        }
+        .mobile-menu-btn:hover, .mobile-menu-btn:active {
+            background: rgba(0, 210, 255, 0.2);
+            border-color: var(--cyan-glow);
+            color: var(--cyan-glow);
+            box-shadow: 0 0 12px rgba(0, 210, 255, 0.35);
         }
 
-        @media (min-width: 768px) {
-            .home-container {
-                max-width: 860px;
-                padding: 42px 38px 36px;
-                border-radius: 36px;
+        .mobile-drawer-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.78);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            z-index: 2200;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .mobile-drawer-overlay.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .mobile-drawer-panel {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 300px;
+            max-width: 86vw;
+            background: linear-gradient(180deg, #0b1322 0%, #060a12 100%);
+            border-left: 1px solid rgba(0, 210, 255, 0.25);
+            box-shadow: -15px 0 50px rgba(0, 0, 0, 0.85);
+            z-index: 2300;
+            transform: translateX(100%);
+            transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        #root[lang="ar"] .mobile-drawer-panel {
+            right: auto;
+            left: 0;
+            border-left: none;
+            border-right: 1px solid rgba(0, 210, 255, 0.25);
+            transform: translateX(-100%);
+            box-shadow: 15px 0 50px rgba(0, 0, 0, 0.85);
+        }
+        .mobile-drawer-panel.active {
+            transform: translateX(0) !important;
+        }
+
+        .drawer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        #root[lang="ar"] .drawer-header { flex-direction: row-reverse; }
+
+        .drawer-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        #root[lang="ar"] .drawer-brand { flex-direction: row-reverse; }
+
+        .drawer-logo {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--cyan-glow);
+            object-fit: cover;
+        }
+        .drawer-brand-title {
+            font-size: 1.05rem;
+            font-weight: 900;
+            display: block;
+            color: #fff;
+            white-space: nowrap;
+        }
+        .drawer-brand-sub {
+            font-size: 0.72rem;
+            color: var(--cyan-glow);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .drawer-close-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-size: 1.15rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .drawer-close-btn:hover {
+            background: #ff1744;
+            border-color: #ff1744;
+        }
+
+        .drawer-body {
+            padding: 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .drawer-section-label {
+            font-size: 0.68rem;
+            font-weight: 800;
+            color: var(--text-muted);
+            letter-spacing: 1.2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+        #root[lang="ar"] .drawer-section-label { text-align: right; }
+
+        .drawer-nav-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .drawer-nav-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 16px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #c5d4e4;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.22s ease;
+        }
+        #root[lang="ar"] .drawer-nav-btn { flex-direction: row-reverse; }
+
+        .dnav-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        #root[lang="ar"] .dnav-left { flex-direction: row-reverse; }
+        .dnav-left i {
+            font-size: 1.15rem;
+            color: var(--cyan-glow);
+            width: 22px;
+            text-align: center;
+        }
+        .dnav-arrow {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.3);
+            transition: transform 0.2s;
+        }
+        #root[lang="ar"] .dnav-arrow {
+            transform: rotate(180deg);
+        }
+
+        .drawer-nav-btn:hover, .drawer-nav-btn.active {
+            background: rgba(0, 210, 255, 0.15);
+            border-color: var(--cyan-glow);
+            color: #fff;
+            box-shadow: 0 0 18px rgba(0, 210, 255, 0.25);
+        }
+        .drawer-nav-btn.active .dnav-arrow {
+            color: var(--cyan-glow);
+        }
+
+        .drawer-divider {
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            margin: 18px 0;
+        }
+
+        .drawer-actions-box {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: auto;
+        }
+        .drawer-quick-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 14px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        #root[lang="ar"] .drawer-quick-btn { flex-direction: row-reverse; }
+
+        .drawer-pill-badge {
+            background: #25d366;
+            color: #000;
+            font-weight: 800;
+            font-size: 0.72rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+        .drawer-status-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0, 210, 255, 0.08);
+            border: 1px solid rgba(0, 210, 255, 0.2);
+            border-radius: 12px;
+            padding: 10px 14px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--cyan-glow);
+        }
+        #root[lang="ar"] .drawer-status-pill { flex-direction: row-reverse; text-align: right; }
+
+        .drawer-wa-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: #fff !important;
+            text-decoration: none !important;
+            padding: 13px;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-weight: 800;
+            box-shadow: 0 4px 18px rgba(37, 211, 102, 0.4);
+            transition: all 0.25s;
+        }
+        .drawer-wa-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 24px rgba(37, 211, 102, 0.6);
+        }
+
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+           RESPONSIVE DESIGN (CARSOFTZ MOBILE ALIGNED)
+           â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+        @media (max-width: 900px) {
+            .nav-links, .working-time-badge, .views-badge { display: none !important; }
+            .mobile-bottom-nav { display: none !important; }
+            .mobile-menu-btn { display: inline-flex !important; }
+
+            html, body, #root {
+                overflow-x: hidden !important;
+                width: 100% !important;
+                max-width: 100vw !important;
+                margin: 0 !important;
+                padding: 0 !important;
             }
-            .avatar-box { width: 165px; height: 165px; }
-            h1.profile-name { font-size: 2.1rem; }
-            p.profile-title { font-size: 1.05rem; }
-            
+            .site-header {
+                width: 100% !important;
+                max-width: 100vw !important;
+                box-sizing: border-box !important;
+            }
+            .header-inner {
+                width: 100% !important;
+                max-width: 100% !important;
+                padding: 10px 14px !important;
+                gap: 8px !important;
+                box-sizing: border-box !important;
+            }
+            .brand-logo-img {
+                width: 38px !important;
+                height: 38px !important;
+            }
+            .brand-title {
+                font-size: 1.05rem !important;
+            }
+            .brand-sub {
+                font-size: 0.65rem !important;
+            }
+            .cart-header-btn {
+                padding: 6px 10px !important;
+                font-size: 0.78rem !important;
+                gap: 5px !important;
+            }
+            .cart-header-btn .cart-btn-txt {
+                display: none !important;
+            }
+            .lang-btn {
+                padding: 6px 10px !important;
+                font-size: 0.78rem !important;
+            }
+
+            .portal-main {
+                padding: 14px 12px 60px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                box-sizing: border-box !important;
+                overflow-x: hidden !important;
+            }
+
+            /* Full Width Layout - Eliminates Blank Gap on Right */
+            .home-container {
+                width: 100% !important;
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                background: transparent !important;
+                border: none !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                backdrop-filter: none !important;
+            }
+            .home-container::before {
+                display: none !important;
+            }
+
+            .home-hero-banner {
+                width: 100% !important;
+                box-sizing: border-box !important;
+                background: linear-gradient(180deg, rgba(14, 22, 38, 0.85) 0%, rgba(8, 13, 24, 0.95) 100%) !important;
+                border: 1px solid rgba(0, 210, 255, 0.2) !important;
+                border-radius: 20px !important;
+                padding: 24px 14px 20px !important;
+                margin-bottom: 16px !important;
+            }
+            .home-hero-banner .avatar-box {
+                width: 120px !important;
+                height: 120px !important;
+                margin: 0 auto 12px !important;
+            }
+            .home-hero-banner h1.profile-name {
+                font-size: 1.4rem !important;
+                line-height: 1.25 !important;
+                margin-bottom: 4px !important;
+            }
+            .home-hero-banner p.profile-title {
+                font-size: 0.82rem !important;
+                margin-bottom: 16px !important;
+            }
+            .home-hero-banner .contact-grid {
+                width: 100% !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 8px !important;
+                box-sizing: border-box !important;
+                margin: 0 auto !important;
+            }
+            .contact-btn {
+                padding: 10px 6px !important;
+                border-radius: 14px !important;
+            }
+            .contact-btn .lbl { font-size: 0.72rem !important; }
+            .contact-btn .num { font-size: 0.8rem !important; }
+
+            .about-card-hero {
+                width: 100% !important;
+                box-sizing: border-box !important;
+                padding: 18px 14px !important;
+                border-radius: 20px !important;
+                margin-bottom: 16px !important;
+            }
+            .about-highlights {
+                grid-template-columns: 1fr !important;
+                gap: 8px !important;
+            }
+            .remote-grid {
+                grid-template-columns: 1fr 1fr !important;
+                gap: 8px !important;
+            }
+            .payment-grid {
+                gap: 8px !important;
+            }
+            .pay-badge {
+                font-size: 0.75rem !important;
+                padding: 7px 10px !important;
+            }
+
+            .sw-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 8px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .sw-card {
+                padding: 12px 6px !important;
+            }
+            .sw-name {
+                font-size: 0.74rem !important;
+            }
+
+            .links-stack {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 10px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .portfolio-box {
+                padding: 16px 12px !important;
+                border-radius: 20px !important;
+                margin-bottom: 16px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .portfolio-img {
+                max-height: 240px !important;
+            }
+
+            .form-box {
+                padding: 20px 14px !important;
+                border-radius: 20px !important;
+                margin-bottom: 16px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .rating-section-box {
+                padding: 20px 14px !important;
+                border-radius: 20px !important;
+                margin-bottom: 16px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .rating-score-overview {
+                flex-direction: column !important;
+                text-align: center !important;
+            }
+            .review-inputs-grid {
+                grid-template-columns: 1fr !important;
+                gap: 10px !important;
+            }
+
+            .portal-hero-title { font-size: 1.45rem !important; }
+            .portal-hero-desc { font-size: 0.85rem !important; }
+            .prod-search-filter { width: 100% !important; }
+
+            .products-grid, .services-grid, .downloads-grid {
+                grid-template-columns: 1fr !important;
+                gap: 16px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .product-card {
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+
+            .blog-container { width: 100% !important; padding: 0 !important; }
+            .blog-article { padding: 18px 14px !important; border-radius: 20px !important; }
+            .blog-features-grid { grid-template-columns: 1fr !important; }
+            .how-steps-grid { grid-template-columns: 1fr !important; }
+            .blog-cta-box { flex-direction: column !important; text-align: center !important; }
+            .blog-warning-list { grid-template-columns: 1fr !important; }
+            .blog-pro-tip { flex-direction: column !important; text-align: center !important; }
+
+            .floating-cart-btn {
+                bottom: 22px !important;
+                right: 18px !important;
+            }
+        }
+
         /* Authentic App Icons on Home Grid */
         .app-icon-img-box {
             width: 52px;
@@ -1813,10 +2284,221 @@
             transform: translateY(0) scale(0.99);
             box-shadow: 0 2px 10px rgba(37, 211, 102, 0.35);
         }
-        .sw-grid { grid-template-columns: repeat(6, 1fr); gap: 14px; }
-            .sw-card { padding: 16px 8px; }
-            .app-icon-badge { width: 50px; height: 50px; }
-            .portfolio-img { max-height: 400px; }
+
+        /* â”€â”€ TABLET RESPONSIVE â”€â”€ */
+        @media (min-width: 601px) and (max-width: 900px) {
+            .home-container {
+                max-width: 650px;
+                padding: 34px 28px;
+            }
+            .avatar-box { width: 145px; height: 145px; }
+            .products-grid, .services-grid, .downloads-grid {
+                grid-template-columns: repeat(2, 1fr) !important;
+            }
+            .sw-grid { grid-template-columns: repeat(4, 1fr) !important; gap: 12px; }
+        }
+
+        /* â”€â”€ DESKTOP PC WIDE VIEW (CARSOFTZ PORTAL STYLE) â”€â”€ */
+        @media (min-width: 901px) {
+            .header-inner {
+                max-width: 1440px !important;
+                width: 100% !important;
+                padding: 14px 32px !important;
+            }
+            .portal-main {
+                max-width: 1440px !important;
+                width: 100% !important;
+                padding: 28px 32px 90px !important;
+                align-items: stretch !important;
+            }
+            /* Remove narrow phone-card confinement on desktop */
+            .home-container {
+                max-width: 100% !important;
+                width: 100% !important;
+                background: transparent !important;
+                border: none !important;
+                box-shadow: none !important;
+                padding: 0 !important;
+                backdrop-filter: none !important;
+                margin: 0 !important;
+            }
+            .home-container::before {
+                display: none !important;
+            }
+
+            /* CarSoftz-Style Hero Profile Banner */
+            .home-hero-banner {
+                background: linear-gradient(180deg, rgba(14, 22, 38, 0.82) 0%, rgba(8, 13, 24, 0.94) 100%);
+                border: 1px solid rgba(0, 210, 255, 0.2);
+                border-radius: 28px;
+                padding: 42px 32px 36px;
+                margin-bottom: 30px;
+                text-align: center;
+                box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6), 0 0 35px rgba(0, 210, 255, 0.08);
+                position: relative;
+            }
+            .home-hero-banner .avatar-box {
+                width: 155px;
+                height: 155px;
+                margin: 0 auto 16px;
+            }
+            .home-hero-banner h1.profile-name {
+                font-size: 2.2rem;
+                margin-bottom: 6px;
+            }
+            .home-hero-banner p.profile-title {
+                font-size: 1.05rem;
+                margin-bottom: 22px;
+            }
+            .home-hero-banner .contact-grid {
+                max-width: 500px;
+                margin: 0 auto;
+                gap: 16px;
+            }
+
+            /* About Hero Card */
+            .about-card-hero {
+                background: linear-gradient(145deg, rgba(14, 22, 38, 0.75) 0%, rgba(9, 14, 24, 0.85) 100%);
+                border: 1px solid rgba(0, 210, 255, 0.16);
+                border-radius: 24px;
+                padding: 32px 36px;
+                margin-bottom: 32px;
+                box-shadow: 0 12px 40px rgba(0,0,0,0.45);
+            }
+            .about-highlights {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 16px;
+            }
+            .remote-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+            .payment-grid {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                justify-content: flex-start;
+            }
+            #root[lang="ar"] .payment-grid {
+                justify-content: flex-start;
+            }
+
+            /* Software Grid: 6 columns spanning full width */
+            .sw-grid {
+                display: grid !important;
+                grid-template-columns: repeat(6, 1fr) !important;
+                gap: 16px !important;
+                margin-bottom: 32px !important;
+                width: 100% !important;
+            }
+            .sw-card { padding: 18px 10px; }
+
+            /* Social Links: 3 columns */
+            .links-stack {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 16px !important;
+                margin-bottom: 32px !important;
+                width: 100% !important;
+            }
+
+            /* Workshop portfolio */
+            .portfolio-box {
+                border-radius: 24px;
+                padding: 28px;
+                margin-bottom: 32px;
+                background: rgba(14, 22, 38, 0.6);
+                border: 1px solid rgba(0, 210, 255, 0.15);
+            }
+            .portfolio-img {
+                max-height: 480px;
+                width: 100%;
+                object-fit: cover;
+                border-radius: 16px;
+            }
+
+            /* Service Request Form Box */
+            .form-box {
+                max-width: 860px;
+                margin: 0 auto 36px;
+                padding: 36px 40px;
+                border-radius: 24px;
+            }
+
+            /* Ratings and Reviews Box */
+            .rating-section-box {
+                border-radius: 24px;
+                padding: 36px 40px;
+                margin-bottom: 32px;
+                background: rgba(14, 22, 38, 0.6);
+                border: 1px solid rgba(0, 210, 255, 0.15);
+            }
+            .rating-score-overview {
+                display: flex;
+                gap: 28px;
+                align-items: center;
+                justify-content: center;
+            }
+            .reviews-feed-list {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 16px !important;
+            }
+
+            /* Products, Services, Downloads Grids: 3 columns wide */
+            .products-grid {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 24px !important;
+                width: 100% !important;
+            }
+            .services-grid {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 24px !important;
+                width: 100% !important;
+            }
+            .downloads-grid {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 24px !important;
+                width: 100% !important;
+            }
+            .portal-hero-banner {
+                max-width: 1000px;
+                margin: 0 auto 32px;
+                text-align: center;
+            }
+            .portal-hero-title {
+                font-size: 2.4rem;
+            }
+            .prod-search-filter {
+                max-width: 1000px;
+                margin: 0 auto 32px;
+            }
+
+            /* Blog (VCI Passthru Interface) */
+            .blog-container {
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+            .blog-features-grid {
+                display: grid !important;
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 20px !important;
+            }
+            .how-steps-grid {
+                display: grid !important;
+                grid-template-columns: repeat(4, 1fr) !important;
+                gap: 16px !important;
+            }
+            .blog-warning-list {
+                display: grid !important;
+                grid-template-columns: repeat(2, 1fr) !important;
+                gap: 16px !important;
+            }
         }
 
         /* ═══════════════════════════════════════════════
@@ -2456,9 +3138,93 @@
                     <i class="fa-solid fa-globe"></i>
                     <span id="t-langToggle">AR</span>
                 </button>
+                <button class="mobile-menu-btn" id="btnMobileMenu" onclick="toggleMobileMenu()" title="Open Navigation Menu" aria-label="Open Navigation Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
+
+    <!-- Mobile Navigation Drawer Overlay & Panel (CarSoftz Style) -->
+    <div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="toggleMobileMenu()"></div>
+    <aside class="mobile-drawer-panel" id="mobileDrawerPanel">
+        <div class="drawer-header">
+            <div class="drawer-brand">
+                <img class="drawer-logo" src="LOGO_B64_PLACEHOLDER" alt="BENZ-ZAYED">
+                <div class="drawer-brand-text">
+                    <span class="drawer-brand-title">BENZ&#8209;ZAYED</span>
+                    <span class="drawer-brand-sub" id="t-drawerSub">Pro Diagnostics</span>
+                </div>
+            </div>
+            <button class="drawer-close-btn" onclick="toggleMobileMenu()" aria-label="Close Menu">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="drawer-body">
+            <div class="drawer-section-label" id="t-drawerNavLabel">NAVIGATION</div>
+            <ul class="drawer-nav-list">
+                <li>
+                    <button class="drawer-nav-btn active" id="dnav-home" onclick="navFromDrawer('home')">
+                        <div class="dnav-left"><i class="fa-solid fa-house"></i><span id="t-drawerHome">Home</span></div>
+                        <i class="fa-solid fa-chevron-right dnav-arrow"></i>
+                    </button>
+                </li>
+                <li>
+                    <button class="drawer-nav-btn" id="dnav-products" onclick="navFromDrawer('products')">
+                        <div class="dnav-left"><i class="fa-solid fa-box-open"></i><span id="t-drawerProducts">Products</span></div>
+                        <i class="fa-solid fa-chevron-right dnav-arrow"></i>
+                    </button>
+                </li>
+                <li>
+                    <button class="drawer-nav-btn" id="dnav-services" onclick="navFromDrawer('services')">
+                        <div class="dnav-left"><i class="fa-solid fa-gears"></i><span id="t-drawerServices">Services</span></div>
+                        <i class="fa-solid fa-chevron-right dnav-arrow"></i>
+                    </button>
+                </li>
+                <li>
+                    <button class="drawer-nav-btn" id="dnav-downloads" onclick="navFromDrawer('downloads')">
+                        <div class="dnav-left"><i class="fa-solid fa-download"></i><span id="t-drawerDownloads">Downloads</span></div>
+                        <i class="fa-solid fa-chevron-right dnav-arrow"></i>
+                    </button>
+                </li>
+                <li>
+                    <button class="drawer-nav-btn" id="dnav-blog" onclick="navFromDrawer('blog')">
+                        <div class="dnav-left"><i class="fa-solid fa-plug-circle-bolt"></i><span id="t-drawerBlog">VCI Interface</span></div>
+                        <i class="fa-solid fa-chevron-right dnav-arrow"></i>
+                    </button>
+                </li>
+            </ul>
+
+            <div class="drawer-divider"></div>
+            <div class="drawer-section-label" id="t-drawerQuickLabel">QUICK ACTIONS</div>
+
+            <div class="drawer-actions-box">
+                <button class="drawer-quick-btn" onclick="toggleCart(); toggleMobileMenu();">
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <i class="fa-solid fa-cart-shopping" style="color:var(--cyan-glow)"></i>
+                        <span id="t-drawerCart">Shopping Cart</span>
+                    </div>
+                    <span class="drawer-pill-badge" id="drawerCartCount">0</span>
+                </button>
+                <button class="drawer-quick-btn" onclick="toggleLang()">
+                    <div style="display:flex;align-items:center;gap:10px;">
+                        <i class="fa-solid fa-globe" style="color:#00e676"></i>
+                        <span id="t-drawerLang">Language: Ø§Ù„Ø¹Ø±Ø¨ÙŠØ©</span>
+                    </div>
+                    <i class="fa-solid fa-rotate" style="font-size:0.75rem;opacity:0.6"></i>
+                </button>
+                <div class="drawer-status-pill">
+                    <span class="pulse-dot"></span>
+                    <span id="t-drawerStatus">24/7 Remote Diagnostics Online</span>
+                </div>
+                <a href="https://wa.me/201091969753" target="_blank" class="drawer-wa-btn">
+                    <i class="fa-brands fa-whatsapp"></i>
+                    <span id="t-drawerWa">Chat on WhatsApp</span>
+                </a>
+            </div>
+        </div>
+    </aside>
 
     <!-- ═════════════════════════════════════════════
          MAIN PORTAL CONTENT TABS
@@ -2470,6 +3236,8 @@
              ───────────────────────────────────────── -->
         <section class="tab-section active" id="sec-home">
             <div class="home-container">
+                <!-- Home Hero Banner -->
+                <div class="home-hero-banner">
                 <!-- Avatar -->
                 <div class="avatar-box"><img src="LOGO_B64_PLACEHOLDER" alt="BENZ-ZAYED Logo"></div>
                 <span class="badge-tag">BENZ-ZAYED</span>
@@ -2488,6 +3256,8 @@
                         <span class="lbl" id="t-wa">WhatsApp</span>
                         <span class="num">01091969753</span>
                     </a>
+                </div>
+
                 </div>
 
                 <!-- About Hero Card -->
@@ -3622,6 +4392,27 @@
     var lang = "en";
 
     // ── TAB SWITCHING LOGIC ──
+    function toggleMobileMenu() {
+        var overlay = document.getElementById("mobileDrawerOverlay");
+        var panel = document.getElementById("mobileDrawerPanel");
+        if (!overlay || !panel) return;
+        var isOpen = panel.classList.contains("active");
+        if (isOpen) {
+            panel.classList.remove("active");
+            overlay.classList.remove("active");
+            document.body.style.overflow = "";
+        } else {
+            panel.classList.add("active");
+            overlay.classList.add("active");
+            document.body.style.overflow = "hidden";
+        }
+    }
+
+    function navFromDrawer(tabId) {
+        switchTab(tabId);
+        toggleMobileMenu();
+    }
+
     function switchTab(tabId) {
         currentTab = tabId;
         document.querySelectorAll(".tab-section").forEach(function(el) {
@@ -3636,6 +4427,13 @@
         });
         var dtBtn = document.getElementById("btn-tab-" + tabId);
         if (dtBtn) dtBtn.classList.add("active");
+
+        // Drawer nav active state
+        document.querySelectorAll(".drawer-nav-btn").forEach(function(b) {
+            b.classList.remove("active");
+        });
+        var dBtn = document.getElementById("dnav-" + tabId);
+        if (dBtn) dBtn.classList.add("active");
 
         // Mobile bottom nav active state
         document.querySelectorAll(".mob-nav-btn").forEach(function(b) {
@@ -3795,6 +4593,18 @@
     // ── BILINGUAL DICTIONARY ──
     var T = {
         en: {
+                        drawerSub: "Pro Diagnostics",
+            drawerNavLabel: "NAVIGATION",
+            drawerHome: "Home",
+            drawerProducts: "Products",
+            drawerServices: "Services",
+            drawerDownloads: "Downloads",
+            drawerBlog: "VCI Interface",
+            drawerQuickLabel: "QUICK ACTIONS",
+            drawerCart: "Shopping Cart",
+            drawerLang: "Language: Arabic",
+            drawerStatus: "24/7 Remote Diagnostics Online",
+            drawerWa: "Chat on WhatsApp",
             brandSub: "Pro Diagnostics",
             navHome: "Home",
             navProducts: "Products",
@@ -4055,6 +4865,18 @@
             btnSubmitRateTxt: "Submit Rating & Review"
         },
         ar: {
+                        drawerSub: "\u0647\u0646\u062F\u0633\u0629 \u0648\u0628\u0631\u0645\u062C\u0629 \u0645\u0631\u0633\u064A\u062F\u0633",
+            drawerNavLabel: "\u0623\u0642\u0633\u0627\u0645 \u0627\u0644\u0645\u0646\u0635\u0629",
+            drawerHome: "\u0627\u0644\u0631\u0626\u064A\u0633\u064A\u0629",
+            drawerProducts: "\u0627\u0644\u0645\u0646\u062A\u062C\u0627\u062A \u0648\u0627\u0644\u0645\u0648\u0627\u0635\u0641\u0627\u062A",
+            drawerServices: "\u0627\u0644\u062E\u062F\u0645\u0627\u062A \u0627\u0644\u0647\u0646\u062F\u0633\u064A\u0629",
+            drawerDownloads: "\u0627\u0644\u0628\u0631\u0627\u0645\u062C \u0648\u0627\u0644\u0645\u0644\u0641\u0627\u062A",
+            drawerBlog: "\u0641\u064A\u0634\u0629 \u0627\u0644\u0641\u062D\u0635 VCI",
+            drawerQuickLabel: "\u0625\u062C\u0631\u0627\u0621\u0627\u062A \u0633\u0631\u064A\u0639\u0629",
+            drawerCart: "\u0633\u0644\u0629 \u0627\u0644\u0645\u0634\u062A\u0631\u064A\u0627\u062A",
+            drawerLang: "Language: English",
+            drawerStatus: "\u062F\u0639\u0645 \u0623\u0648\u0646\u0644\u0627\u064A\u0646 \u0639\u0646 \u0628\u0639\u062F 24/7 \u0645\u062A\u0627\u062D",
+            drawerWa: "\u0645\u062D\u0627\u062F\u062B\u0629 \u0641\u0648\u0631\u064A\u0629 \u0648\u0627\u062A\u0633\u0627\u0628",
             brandSub: "\u0628\u0631\u0645\u062c\u0629 \u0648\u062a\u0634\u062e\u064a\u0635 \u0627\u062d\u062a\u0631\u0627\u0641\u064a",
             navHome: "\u0627\u0644\u0631\u0626\u064a\u0633\u064a\u0629",
             navProducts: "\u0627\u0644\u0645\u0646\u062a\u062c\u0627\u062a",
@@ -4645,6 +5467,42 @@
         el.textContent = labels[selectedStar] || (selectedStar + ' Stars');
     }
 
+    var REVIEWS_API_URL = "https://api.restful-api.dev/objects/ff808181a09d98f701a1546953f91bba";
+    var globalReviewsList = [];
+
+    function fetchGlobalReviews() {
+        fetch(REVIEWS_API_URL)
+            .then(function(res) {
+                if (!res.ok) throw new Error("HTTP error " + res.status);
+                return res.json();
+            })
+            .then(function(doc) {
+                if (doc && doc.data && doc.data.reviews_json) {
+                    try {
+                        var parsed = JSON.parse(doc.data.reviews_json);
+                        if (Array.isArray(parsed)) {
+                            globalReviewsList = parsed;
+                            try {
+                                localStorage.setItem("bz_global_reviews_cache", JSON.stringify(parsed));
+                            } catch(e) {}
+                            renderReviews();
+                        }
+                    } catch(e) {
+                        console.error("Error parsing global reviews:", e);
+                    }
+                }
+            })
+            .catch(function(err) {
+                try {
+                    var cached = localStorage.getItem("bz_global_reviews_cache");
+                    if (cached && (!globalReviewsList || globalReviewsList.length === 0)) {
+                        globalReviewsList = JSON.parse(cached);
+                        renderReviews();
+                    }
+                } catch(e) {}
+            });
+    }
+
     function submitReview(e) {
         if (e && e.preventDefault) e.preventDefault();
         var nameEl = document.getElementById('revName');
@@ -4667,6 +5525,7 @@
         }
 
         var newRev = {
+            id: 'rev_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
             name_en: name,
             name_ar: name,
             loc_en: loc || (lang === 'ar' ? '\u0639\u0645\u064a\u0644 \u062a\u0645 \u0627\u0644\u062a\u062d\u0642\u0642 \u0645\u0646\u0647' : 'Verified Client'),
@@ -4678,37 +5537,93 @@
             comment_ar: comment
         };
 
+        // 1. Save locally for immediate feedback on this device
         var customReviews = [];
         try {
             var saved = localStorage.getItem('bz_reviews');
             if (saved) customReviews = JSON.parse(saved);
         } catch(err) { customReviews = []; }
-
         customReviews.unshift(newRev);
         try {
             localStorage.setItem('bz_reviews', JSON.stringify(customReviews));
         } catch(err) {}
+
+        globalReviewsList.unshift(newRev);
+        renderReviews();
 
         if (nameEl) nameEl.value = '';
         if (locEl) locEl.value = '';
         if (commentEl) commentEl.value = '';
         setRateStar(5);
 
-        renderReviews();
-        showToast(lang === 'ar' ? '\u0634\u0643\u0631\u0627\u064b \u0644\u062a\u0642\u064a\u064a\u0645\u0643! \u062a\u0645 \u0646\u0634\u0631 \u0631\u0623\u064a\u0643 \u0628\u0646\u062c\u0627\u062d' : 'Thank you! Your review was posted successfully');
+        showToast(lang === 'ar' ? '\u0634\u0643\u0631\u0627\u064b \u0644\u062a\u0642\u064a\u064a\u0645\u0643! \u062a\u0645 \u0646\u0634\u0631 \u0631\u0623\u064a\u0643 \u0639\u0644\u0649 \u0627\u0644\u0645\u0648\u0642\u0639 \u0644\u0644\u062c\u0645\u064a\u0639' : 'Thank you! Your review has been published publicly for everyone.');
+
+        // 2. Synchronize to Global Cloud Database so ALL other devices see it
+        fetch(REVIEWS_API_URL)
+            .then(function(res) { return res.json(); })
+            .then(function(doc) {
+                var currentList = [];
+                if (doc && doc.data && doc.data.reviews_json) {
+                    try { currentList = JSON.parse(doc.data.reviews_json); } catch(e) {}
+                }
+                // Prepend new review
+                currentList.unshift(newRev);
+                if (currentList.length > 100) currentList = currentList.slice(0, 100);
+
+                return fetch(REVIEWS_API_URL, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        name: 'benz_zayed_global_reviews_db',
+                        data: { reviews_json: JSON.stringify(currentList) }
+                    })
+                });
+            })
+            .then(function(res) {
+                if (res && res.ok) {
+                    console.log('Global review synced to cloud database successfully!');
+                }
+            })
+            .catch(function(err) {
+                console.error('Cloud review sync error:', err);
+            });
     }
 
     function renderReviews() {
         var container = document.getElementById('reviewsCarousel');
         if (!container) return;
 
-        var customReviews = [];
+        // Custom device reviews from localStorage (for instant display)
+        var localReviews = [];
         try {
             var saved = localStorage.getItem('bz_reviews');
-            if (saved) customReviews = JSON.parse(saved);
-        } catch(err) { customReviews = []; }
+            if (saved) localReviews = JSON.parse(saved);
+        } catch(err) { localReviews = []; }
 
-        var allList = customReviews.concat(DEFAULT_REVIEWS);
+        // Cached global reviews if live array is empty
+        if (!globalReviewsList || globalReviewsList.length === 0) {
+            try {
+                var cached = localStorage.getItem('bz_global_reviews_cache');
+                if (cached) globalReviewsList = JSON.parse(cached);
+            } catch(e) {}
+        }
+
+        // Merge global reviews and local device reviews without duplicates
+        var allCustom = [];
+        var seen = {};
+
+        function addRev(r) {
+            var key = (r.name_ar || r.name_en || '') + '::' + (r.comment_ar || r.comment_en || '');
+            if (!seen[key]) {
+                seen[key] = true;
+                allCustom.push(r);
+            }
+        }
+
+        (localReviews || []).forEach(addRev);
+        (globalReviewsList || []).forEach(addRev);
+
+        var allList = allCustom.concat(DEFAULT_REVIEWS);
 
         var html = '';
         allList.forEach(function(r) {
@@ -4766,7 +5681,7 @@
             "serviceLbl", "notesLbl", "formBtn", "vcard",
             "prodBadge", "prodTitle", "prodDesc", "pillAll", "pillHot", "pillDiag", "pillMaster", "pillDiag", "pillCode", "pillWiring", "pillManuals", "pLBadge", "pLTitle", "pLDesc", "pLf1", "pLf2", "pLf3", "pLf4", "licLabelL", "licValL", "orderBtnL", "p0Badge", "p0Title", "p0Desc", "p0f1", "p0f2", "p0f3", "p0f4", "licLabel0", "licVal0", "orderBtn0", "pxBadge", "pxTitle", "pxDesc", "pxf1", "pxf2", "pxf3", "pxf4", "licLabelX", "licValX", "orderBtnX", "pzBadge", "pzTitle", "pzDesc", "pzf1", "pzf2", "pzf3", "pzf4", "licLabelZ", "licValZ", "orderBtnZ", "pillWiring", "pillManuals", "p1Badge", "p1Title", "p1Desc", "p1f1", "p1f2", "p1f3", "p1f4", "licLabel1", "licVal1", "orderBtn1", "p2Badge", "p2Title", "p2Desc", "p2f1", "p2f2", "p2f3", "p2f4", "licLabel2", "licVal2", "orderBtn2", "p3Badge", "p3Title", "p3Desc", "p3f1", "p3f2", "p3f3", "p3f4", "licLabel3", "licVal3", "orderBtn3", "p4Badge", "p4Title", "p4Desc", "p4f1", "p4f2", "p4f3", "p4f4", "licLabel4", "licVal4", "orderBtn4", "p5Badge", "p5Title", "p5Desc", "p5f1", "p5f2", "p5f3", "p5f4", "licLabel5", "licVal5", "orderBtn5", "p6Badge", "p6Title", "p6Desc", "p6f1", "p6f2", "p6f3", "p6f4", "licLabel6", "licVal6", "orderBtn6", "p7Badge", "p7Title", "p7Desc", "p7f1", "p7f2", "p7f3", "p7f4", "licLabel7", "licVal7", "orderBtn7",
             "servBadge", "servTitle", "servDesc", "s1Title", "s1Desc", "s1Btn", "s2Title", "s2Desc", "s2Btn", "s3Title", "s3Desc", "s3Btn", "s4Title", "s4Desc", "s4Btn",
-            "dlBadge", "dlTitle", "dlDesc", "dlSpecTitle", "dlSpecDesc", "dlBtn6", "navBlog", "mobBlog", "blogCatBadge", "blogReadTime", "blogTitle", "blogLead", "blogWhyTitle", "blogWhyDesc", "feat1Title", "feat1Desc", "feat2Title", "feat2Desc", "feat3Title", "feat3Desc", "feat4Title", "feat4Desc", "feat5Title", "feat5Desc", "feat6Title", "feat6Desc", "blogTableTitle", "thFeature", "tdDoip", "tdConn", "tdDts", "tdNewBenz", "tdPort", "tdPrice", "blogCtaH4", "blogCtaP", "blogCtaBtn", "blogStabilityTitle", "blogStabilityDesc", "blogWarnTitle", "warn1", "warn2", "warn3", "warn4", "blogFaqTitle", "faq1Q", "faq1A", "faq2Q", "faq2A", "faq3Q", "faq3A", "faq4Q", "faq4A", "howTitle", "step1Title", "step1Desc", "step2Title", "step2Desc", "step3Title", "step3Desc", "cartHeaderBtn", "cartTitle", "cartTotalLabel", "cartCheckoutText", "cartClearText", "addCartL", "addCart0", "addCartX", "addCartZ", "addCart1", "addCart2", "addCart3", "addCart4", "addCart5", "addCart6", "addCart7", "rateBadge", "rateTitle", "rateDesc", "rateCount", "rateHl1", "rateHl2", "rateHl3", "starLabel", "btnSubmitRateTxt"
+            "dlBadge", "dlTitle", "dlDesc", "dlSpecTitle", "dlSpecDesc", "dlBtn6", "navBlog", "mobBlog", "blogCatBadge", "blogReadTime", "blogTitle", "blogLead", "blogWhyTitle", "blogWhyDesc", "feat1Title", "feat1Desc", "feat2Title", "feat2Desc", "feat3Title", "feat3Desc", "feat4Title", "feat4Desc", "feat5Title", "feat5Desc", "feat6Title", "feat6Desc", "blogTableTitle", "thFeature", "tdDoip", "tdConn", "tdDts", "tdNewBenz", "tdPort", "tdPrice", "blogCtaH4", "blogCtaP", "blogCtaBtn", "blogStabilityTitle", "blogStabilityDesc", "blogWarnTitle", "warn1", "warn2", "warn3", "warn4", "blogFaqTitle", "faq1Q", "faq1A", "faq2Q", "faq2A", "faq3Q", "faq3A", "faq4Q", "faq4A", "howTitle", "step1Title", "step1Desc", "step2Title", "step2Desc", "step3Title", "step3Desc", "cartHeaderBtn", "cartTitle", "cartTotalLabel", "cartCheckoutText", "cartClearText", "addCartL", "addCart0", "addCartX", "addCartZ", "addCart1", "addCart2", "addCart3", "addCart4", "addCart5", "addCart6", "addCart7", "rateBadge", "rateTitle", "rateDesc", "rateCount", "rateHl1", "rateHl2", "rateHl3", "starLabel", "btnSubmitRateTxt", "drawerSub", "drawerNavLabel", "drawerHome", "drawerProducts", "drawerServices", "drawerDownloads", "drawerBlog", "drawerQuickLabel", "drawerCart", "drawerLang", "drawerStatus", "drawerWa"
         ];
 
         ids.forEach(function(k) {
@@ -4790,6 +5705,8 @@
         initViewCounter();
         updateCartBadges();
         renderReviews();
+        fetchGlobalReviews();
+        setInterval(fetchGlobalReviews, 20000);
         setRateStar(5);
     });
     </script>
