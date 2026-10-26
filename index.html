@@ -925,6 +925,7 @@
         #root[lang="ar"] .arrow { transform: rotate(180deg); }
 
         .facebook .link-icon { background: rgba(24, 119, 242, 0.18); color: #1877f2; }
+        .fb-group  .link-icon { background: rgba(0, 195, 255, 0.18); color: #00d2ff; }
         .youtube  .link-icon { background: rgba(255, 0, 0, 0.18); color: #ff0000; }
         .tiktok   .link-icon { background: rgba(254, 44, 85, 0.18); color: #fe2c55; }
         .linkedin .link-icon { background: rgba(10, 102, 194, 0.18); color: #0a66c2; }
@@ -3528,8 +3529,12 @@
                 <!-- Official Social Platforms -->
                 <div class="sec-hdr"><i class="fa-solid fa-share-nodes"></i><span id="t-social">Official Platforms</span></div>
                 <div class="links-stack">
-                    <a href="https://www.facebook.com/share/1LTvuN7uLF/" target="_blank" class="link-card facebook">
+                    <a href="https://www.facebook.com/share/1FiQewS3j9/" target="_blank" class="link-card facebook">
                         <div class="link-left"><div class="link-icon"><i class="fa-brands fa-facebook-f"></i></div><div class="link-info"><h4 id="t-fb">Facebook Page</h4><span>BENZ-ZAYED</span></div></div>
+                        <i class="fa-solid fa-chevron-right arrow"></i>
+                    </a>
+                    <a href="https://www.facebook.com/share/g/19ipAhzsZ3/" target="_blank" class="link-card fb-group">
+                        <div class="link-left"><div class="link-icon"><i class="fa-solid fa-users"></i></div><div class="link-info"><h4 id="t-fbGroup">Facebook Community</h4><span>BENZ-ZAYED Group</span></div></div>
                         <i class="fa-solid fa-chevron-right arrow"></i>
                     </a>
                     <a href="https://youtube.com/@benz_zayed?si=ZVtAt5dXSqpnfg7z" target="_blank" class="link-card youtube">
@@ -4698,6 +4703,7 @@
             portCaption: "Real Mercedes-Benz diagnostic environment \u2014 Xentry, DTS Monaco, WIS, DAS & more",
             social: "Official Platforms",
             fb: "Facebook Page",
+            fbGroup: "Facebook Community",
             yt: "YouTube Channel",
             tt: "TikTok",
             li: "LinkedIn",
@@ -4979,6 +4985,7 @@
             portCaption: "\u0628\u064a\u0626\u0629 \u0628\u0631\u0627\u0645\u062c \u0627\u0644\u062a\u0634\u062e\u064a\u0635 \u0627\u0644\u062d\u0642\u064a\u0642\u064a\u0629 \u2014 Xentry\u060c DTS Monaco\u060c WIS\u060c DAS \u0648\u0627\u0644\u0645\u0632\u064a\u062f",
             social: "\u0627\u0644\u0645\u0646\u0635\u0627\u062a \u0627\u0644\u0631\u0633\u0645\u064a\u0629",
             fb: "\u0635\u0641\u062d\u0629 \u0641\u064a\u0633\u0628\u0648\u0643",
+            fbGroup: "\u0645\u062c\u0645\u0648\u0639\u0629 \u0641\u064a\u0633\u0628\u0648\u0643 (Community)",
             yt: "\u0642\u0646\u0627\u0629 \u064a\u0648\u062a\u064a\u0648\u0628",
             tt: "\u062a\u064a\u0643 \u062a\u0648\u0643",
             li: "\u0644\u064a\u0646\u0643\u062f \u0625\u0646",
@@ -5774,7 +5781,7 @@
             "workHours", "langToggle", "h1", "title", "call", "wa",
             "aboutHeading", "vipBadge", "aboutDesc", "hlWorld", "hlSupport", "hlSince",
             "remoteTitle", "anydeskSub", "tvSub", "payTitle", "cashPay", "sw", "tabAll",
-            "tabDiag", "tabCode", "tabParts", "portTitle", "portCaption", "social", "fb",
+            "tabDiag", "tabCode", "tabParts", "portTitle", "portCaption", "social", "fb", "fbGroup",
             "yt", "tt", "li", "gm", "formTitle", "nameLbl", "phoneLbl", "carLbl",
             "serviceLbl", "notesLbl", "formBtn", "vcard",
             "prodBadge", "prodTitle", "prodDesc", "pillAll", "pillHot", "pillDiag", "pillMaster", "pillDiag", "pillCode", "pillWiring", "pillManuals", "pLBadge", "pLTitle", "pLDesc", "pLf1", "pLf2", "pLf3", "pLf4", "licLabelL", "licValL", "orderBtnL", "p0Badge", "p0Title", "p0Desc", "p0f1", "p0f2", "p0f3", "p0f4", "licLabel0", "licVal0", "orderBtn0", "pxBadge", "pxTitle", "pxDesc", "pxf1", "pxf2", "pxf3", "pxf4", "licLabelX", "licValX", "orderBtnX", "pzBadge", "pzTitle", "pzDesc", "pzf1", "pzf2", "pzf3", "pzf4", "licLabelZ", "licValZ", "orderBtnZ", "pillWiring", "pillManuals", "p1Badge", "p1Title", "p1Desc", "p1f1", "p1f2", "p1f3", "p1f4", "licLabel1", "licVal1", "orderBtn1", "p2Badge", "p2Title", "p2Desc", "p2f1", "p2f2", "p2f3", "p2f4", "licLabel2", "licVal2", "orderBtn2", "p3Badge", "p3Title", "p3Desc", "p3f1", "p3f2", "p3f3", "p3f4", "licLabel3", "licVal3", "orderBtn3", "p4Badge", "p4Title", "p4Desc", "p4f1", "p4f2", "p4f3", "p4f4", "licLabel4", "licVal4", "orderBtn4", "p5Badge", "p5Title", "p5Desc", "p5f1", "p5f2", "p5f3", "p5f4", "licLabel5", "licVal5", "orderBtn5", "p6Badge", "p6Title", "p6Desc", "p6f1", "p6f2", "p6f3", "p6f4", "licLabel6", "licVal6", "orderBtn6", "p7Badge", "p7Title", "p7Desc", "p7f1", "p7f2", "p7f3", "p7f4", "licLabel7", "licVal7", "orderBtn7",
